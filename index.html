@@ -56,7 +56,7 @@ body::before {
 button { cursor: pointer; }
 
 /* =========================
-   3D ENVELOPE FLAP HINGE OPENING
+   VIDEO COVER & SMOOTH TRANSITION
 ========================= */
 
 .envelope {
@@ -68,79 +68,36 @@ button { cursor: pointer; }
   position: fixed;
   inset: 0;
   z-index: 1000;
-  padding: 20px;
-  background: url('https://github.com/SanketSaini07/Demo/raw/main/Screenshot_2026-11-03-11-33-41-63_92460851df6f172a4592fca41cc2d2e6.jpg') center/cover no-repeat;
-  perspective: 1200px;
-  transition: opacity 0.8s ease;
+  background: #110206;
+  overflow: hidden;
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cover-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
 .envelope.opening {
   opacity: 0;
+  transform: scale(1.15);
   pointer-events: none;
 }
 
-.envelope.opening .envelope-inner {
-  transform: rotateX(-35deg) scale(1.1);
-  opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
-}
-
-.envelope-overlay-tint {
+.video-tap-trigger {
   position: absolute;
-  inset: 0;
-  background: rgba(43, 6, 16, 0.32);
-  pointer-events: none;
-}
-
-.envelope-inner {
-  width: 100%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  padding: 40px 25px;
-  transform-origin: top center;
-  transition: transform 0.8s ease, opacity 0.8s ease;
-}
-
-/* 3D Gold Botanical Wax Seal */
-.seal {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin: 30px auto 20px;
-  background: radial-gradient(circle at 35% 30%, #fff7eb 0%, #e2c08a 45%, #b8975b 75%, #7a5c24 100%);
-  border: 4px solid #fff;
-  box-shadow: 
-    0 18px 40px rgba(0,0,0,0.6),
-    inset 0 3px 6px rgba(255,255,255,0.9),
-    inset 0 -4px 8px rgba(0,0,0,0.4);
-  color: #3b0c19;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 2px;
-  animation: sealFloat 3.5s ease-in-out infinite;
-  transition: transform 0.4s ease;
-}
-
-.seal * { pointer-events: none; }
-
-.seal:hover {
-  transform: scale(1.07) rotate(2deg);
-}
-
-@keyframes sealFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  z-index: 10;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
 }
 
 /* =========================
@@ -185,12 +142,12 @@ button { cursor: pointer; }
 
 #invitation.show {
   display: block;
-  animation: fadeIn 1s ease forwards;
+  animation: fadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 section {
@@ -272,24 +229,15 @@ section {
 }
 
 .ganesha-mantra {
-  font-size: clamp(20px, 4vw, 25px);
+  font-size: clamp(18px, 4vw, 22px);
   line-height: 1.6;
   color: #5c182a;
   font-weight: 600;
   margin: 15px 0;
 }
 
-.ganesha-translation {
-  font-size: clamp(15px, 3.2vw, 17px);
-  font-style: italic;
-  color: var(--text-muted);
-  max-width: 440px;
-  margin: 0 auto 25px;
-  line-height: 1.5;
-}
-
 /* =========================
-   HERO SECTION (Wrapped in Royal Paper Card)
+   HERO SECTION (Royal Paper Card)
 ========================= */
 
 .hero {
@@ -320,12 +268,13 @@ section {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(60px, 12vw, 95px);
   line-height: 1.05;
+  padding-top: 10px;
   word-wrap: break-word;
 }
 
 .parent-line {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(15px, 2.8vw, 18px);
+  font-size: clamp(16px, 2.8vw, 18px);
   font-style: italic;
   color: var(--text-muted);
   margin-top: -2px;
@@ -341,33 +290,12 @@ section {
   display: block;
 }
 
-.ornament {
-  color: var(--accent-gold);
-  margin: 12px 0;
-  letter-spacing: 10px;
-  font-size: 15px;
-}
-
 .hero-message {
   font-size: clamp(17px, 3.5vw, 21px);
   line-height: 1.6;
   margin: 18px auto;
   max-width: 480px;
   color: var(--text-dark);
-}
-
-.hero-date-badge {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 24px;
-  border-top: 1px solid var(--rose-gold);
-  border-bottom: 1px solid var(--rose-gold);
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: 3px;
-  color: var(--royal-burgundy);
-  font-size: clamp(11px, 2.5vw, 13px);
-  font-weight: 600;
-  background: rgba(226, 192, 138, 0.12);
 }
 
 /* =========================
@@ -426,8 +354,8 @@ section {
 }
 
 .section-script {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(50px, 8vw, 75px);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 8vw, 48px);
   color: var(--royal-burgundy);
   margin-bottom: 10px;
   line-height: 1.1;
@@ -443,8 +371,8 @@ section {
 }
 
 .scratch-card-wrapper {
-  width: min(340px, 88vw);
-  height: 320px;
+  width: min(360px, 90vw);
+  height: 340px;
   position: relative;
   margin: 0 auto 25px;
   border-radius: 14px;
@@ -471,7 +399,7 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 25px;
+  padding: 20px;
   text-align: center;
   background: radial-gradient(circle, #fffdf9 0%, #f9f1e6 100%);
   color: var(--royal-burgundy);
@@ -484,21 +412,51 @@ section {
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--accent-gold);
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 
-.scratch-message strong {
+.date-pills-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 15px;
+}
+
+.date-pill {
+  background: rgba(59, 12, 25, 0.04);
+  border: 1px solid rgba(226, 192, 138, 0.6);
+  border-radius: 12px;
+  padding: 14px 14px;
+  min-width: 80px;
+  text-align: center;
+  box-shadow: inset 0 0 10px rgba(59, 12, 25, 0.02);
+}
+
+.date-pill strong {
+  display: block;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 6vw, 32px);
-  margin: 6px 0;
+  font-size: clamp(22px, 5vw, 26px);
   color: var(--royal-burgundy);
   font-weight: 700;
+  line-height: 1.1;
 }
 
-.scratch-message .names {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(34px, 7vw, 42px);
-  color: var(--royal-burgundy);
+.date-pill span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+  display: block;
+}
+
+.scratch-message .venue-subtext {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 8px;
 }
 
 #scratchCanvas {
@@ -512,7 +470,6 @@ section {
   border-radius: 12px;
 }
 
-/* Confetti Burst Particles */
 .confetti-particle {
   position: absolute;
   top: 50%;
@@ -734,6 +691,29 @@ section {
   margin: 15px 0 20px;
 }
 
+.tap-indicator {
+  position: absolute;
+  z-index: 5;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  background: rgba(59, 12, 25, 0.75);
+  border: 1px solid var(--rose-gold);
+  padding: 8px 16px;
+  border-radius: 30px;
+  pointer-events: none; /* Allows clicks to pass through to the button underneath */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  animation: pulseTap 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulseTap {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
 .closing-buttons {
   display: flex;
   justify-content: center;
@@ -756,26 +736,21 @@ footer {
 
 <body>
 
-<!-- UNSEAL OVERLAY (3D Flap Hinge Opening) -->
+<!-- VIDEO COVER OVERLAY (From index.html) -->
 <section class="envelope" id="envelope">
-  <div class="envelope-overlay-tint"></div>
-  <div class="envelope-inner">
-    <div class="eyebrow" style="color: #f7ebd7; letter-spacing: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">A Royal Celebration of Love</div>
-    <button class="seal" id="openSealBtn">
-      <span style="font-size: 18px; margin-bottom: 2px;">❀</span>
-      <span>TAP TO<br>OPEN</span>
-    </button>
-    <div style="font-size: 16px; font-style: italic; color: #f7ebd7; text-shadow: 0 2px 4px rgba(0,0,0,0.8); margin-top: 8px;">
-      Sealed with warmth & respect
-    </div>
-  </div>
+  <video id="coverVideo" class="cover-video" muted playsinline preload="auto">
+    <source src="https://github.com/SanketSaini07/Demo/raw/main/VID-20261103-WA0006.mp4" type="video/mp4">
+  </video>
+  <div class="tap-indicator">Tap to Open</div>
+
+  <button class="video-tap-trigger" id="videoTriggerBtn" aria-label="Open Invitation"></button>
 </section>
 
 <!-- MUSIC CONTROL -->
-<button class="music-control" id="musicControl" onclick="toggleMusic()">
+<!-- <button class="music-control" id="musicControl" onclick="toggleMusic()">
   <span id="musicIcon">♪</span> 
   <span id="musicLabel">Play Music</span>
-</button>
+</button> -->
 
 <audio id="weddingMusic" loop preload="auto">
   <source src="love-story.mp3" type="audio/mpeg">
@@ -784,11 +759,11 @@ footer {
 <!-- MAIN INVITATION CONTENT -->
 <main id="invitation">
 
-  <!-- GANESHA BLESSING PAGE -->
+  <!-- GANESHA BLESSING PAGE (Ganesha Image from gemini-code) -->
   <section class="ganesha-section" id="ganeshaSection">
     <div class="ganesha-card paper-card">
       <div class="ganesha-img-wrapper">
-        <img src="https://github.com/SanketSaini07/Demo/raw/main/aa663cb25a53f8f937c35dfc05fab79e.jpg" alt="Lord Ganesha" class="ganesha-img">
+        <img src="https://github.com/SanketSaini07/Demo/raw/main/IMG-20261103-WA0007.jpg" alt="Lord Ganesha" class="ganesha-img">
       </div>
       
       <div class="ganesha-title">|| श्री गणेशाय नमः ||</div>
@@ -796,10 +771,6 @@ footer {
       <div class="ganesha-mantra">
         वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br>
         निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
-      </div>
-      
-      <div class="ganesha-translation">
-        O Lord Ganesha, with the curved trunk and immense aura, glowing with the radiance of millions of suns, please remove all obstacles from our new journey forever.
       </div>
 
       <div>
@@ -811,12 +782,13 @@ footer {
     </div>
   </section>
 
-  <!-- HERO SECTION WITH PARENT DETAILS (Now in Paper Card Format) -->
+  <!-- HERO SECTION -->
   <section class="hero" id="heroSection">
     <div class="hero-card paper-card">
-      <div class="eyebrow">Together with our families</div>
-      <div class="ornament">❧ ✧ ❧</div>
-      
+      <p class="hero-message">
+        We are honored to welcome you to the Wedding ceremony of 
+      </p>
+	  
       <h1 class="script-names royal-name-text">Simran</h1>
       <div class="parent-line">(D/o Smt. Poonam Saini &amp; Sh. Subhash Saini)</div>
 
@@ -825,17 +797,10 @@ footer {
       <h1 class="script-names royal-name-text">Nitish</h1>
       <div class="parent-line">(S/o Smt. Kiran Saini &amp; Sh. Subhash Chand)</div>
       
-      <div class="ornament">♡ ───── ✧ ───── ♡</div>
-      
       <p class="hero-message">
-        Two hearts, two families, and one beautiful beginning.
-        With the blessings of our elders, we invite you to share in the joy of our wedding celebrations.
+        As they begin their journey together in faith and love, we thank you for being part of this blessed occasion 
       </p>
-      
-      <div class="hero-date-badge">
-        FRIDAY &nbsp;•&nbsp; 11 DECEMBER 2026
-      </div>
-
+	  
       <div>
         <a href="#scratchSection" class="scroll-indicator">
           <span>Slide to Surprise</span>
@@ -847,18 +812,31 @@ footer {
 
   <!-- SCRATCH CARD -->
   <section class="scratch-section" id="scratchSection">
-    <div class="section-eyebrow">Interactive Surprise</div>
-    <h2 class="section-script">Scratch to Reveal</h2>
+    <h2 class="section-script">Their Journey Begins</h2>
     <p class="section-description">
-      Gently brush away 60% of the shimmer to unlock our wedding date with gold confetti.
+      ✦ Scratch to reveal the date ✦
     </p>
 
     <div class="scratch-card-wrapper" id="scratchCardWrapper">
       <div class="scratch-message">
         <span class="invite-tag">You're Cordially Invited</span>
-        <strong>11 December 2026</strong>
-        <span style="font-size: 16px; font-style: italic; color: var(--text-muted);">Friday • Karnal</span>
-        <div class="names">Simran &amp; Nitish</div>
+        
+        <div class="date-pills-row">
+          <div class="date-pill">
+            <strong>11</strong>
+            <span>DAY</span>
+          </div>
+          <div class="date-pill">
+            <strong>December</strong>
+            <span>MONTH</span>
+          </div>
+          <div class="date-pill">
+            <strong>2026</strong>
+            <span>YEAR</span>
+          </div>
+        </div>
+
+        <div class="venue-subtext">Friday, at 10:00 AM • Karnal</div>
       </div>
       <canvas id="scratchCanvas"></canvas>
     </div>
@@ -867,7 +845,7 @@ footer {
 
     <div>
       <a href="#events" class="scroll-indicator">
-        <span>View Festivities</span>
+        <span>View Timeline</span>
         <span class="chevron-down">↓</span>
       </a>
     </div>
@@ -875,35 +853,32 @@ footer {
 
   <!-- EVENT FESTIVITIES -->
   <section class="events-section" id="events">
-    <div class="section-eyebrow">The Festivities</div>
+    <div class="section-eyebrow">Program Timeline</div>
     <h2 class="section-script">A Wedding to Remember</h2>
 
     <div class="events-grid">
       <article class="event-card paper-card haldi">
         <span class="event-icon">🌼</span>
         <h3>Haldi Ceremony</h3>
-        <div class="event-subtitle">A Golden Beginning</div>
         <div class="event-detail"><b>Date</b> Wednesday, 9 December 2026</div>
-        <div class="event-detail"><b>Time</b> 2:00 PM Onwards</div>
-        <div class="event-detail"><b>Venue</b> Family Residence</div>
+        <div class="event-detail"><b>Time</b> 02:00 PM Onwards</div>
+        <div class="event-detail"><b>Venue</b> H. No. 132-B, Gupta Colony, Taraori (Karnal) </div>
       </article>
 
       <article class="event-card paper-card mehndi">
         <span class="event-icon mandala">❀</span>
         <h3>Mehndi Ceremony</h3>
-        <div class="event-subtitle">Where Tradition Blooms</div>
         <div class="event-detail"><b>Date</b> Thursday, 10 December 2026</div>
         <div class="event-detail"><b>Time</b> 10:00 AM Onwards</div>
-        <div class="event-detail"><b>Venue</b> Family Residence</div>
+        <div class="event-detail"><b>Venue</b> H. No. 132-B, Gupta Colony, Taraori (Karnal) </div>
       </article>
 
       <article class="event-card paper-card sangeet">
         <span class="event-icon music-notes">♫ ♪ ♬</span>
         <h3>Ladies Sangeet</h3>
-        <div class="event-subtitle">An Evening of Sparkle</div>
         <div class="event-detail"><b>Date</b> Thursday, 10 December 2026</div>
-        <div class="event-detail"><b>Time</b> 6:30 PM Onwards</div>
-        <div class="event-detail"><b>Venue</b> Family Residence</div>
+        <div class="event-detail"><b>Time</b> 06:30 PM Onwards</div>
+        <div class="event-detail"><b>Venue</b> H. No. 132-B, Gupta Colony, Taraori (Karnal) </div>
       </article>
 
       <article class="event-card paper-card wedding">
@@ -911,8 +886,11 @@ footer {
         <h3>The Wedding</h3>
         <div class="event-subtitle">Our Forever Begins</div>
         <div class="event-detail"><b>Date</b> Friday, 11 December 2026</div>
-        <div class="event-detail"><b>Milestones</b> Baraat: 10 AM | Lunch: 1 PM | Vidai: 6 PM</div>
-        <div class="event-detail"><b>Venue</b> The Vivaan Hotels &amp; Resorts, Karnal</div>
+        <div class="event-detail"><b>Milestones</b></div>
+        <div class="event-detail"><b>Baraat</b> 10:00 AM </div>
+        <div class="event-detail"><b>Lunch</b> 01:00 PM </div>
+        <div class="event-detail"><b>Vidaai</b> 06:00 PM </div>
+        <div class="event-detail"><b>Venue</b> The Vivaan Hotel &amp; Resorts, Karnal</div>
       </article>
     </div>
 
@@ -926,8 +904,8 @@ footer {
 
   <!-- COUNTDOWN -->
   <section class="countdown-section" id="countdownSection">
-    <div class="section-eyebrow">Counting every moment</div>
-    <h2 class="section-script">Until Our Forever</h2>
+    <div class="section-eyebrow">The Countdown Begins</div>
+    <h2 class="section-script">Waiting for the Big Day Together</h2>
     
     <div class="countdown">
       <div class="countdown-box"><strong id="days">00</strong><span>Days</span></div>
@@ -939,11 +917,11 @@ footer {
 
   <!-- VENUE LOCATION -->
   <section class="venue-section">
-    <div class="section-eyebrow">Hospitality &amp; Location</div>
+    <div class="section-eyebrow">Location</div>
     <h2 class="section-script">Celebration Venue</h2>
     
     <div class="venue-card paper-card">
-      <h3>The Vivaan Hotels &amp; Resorts</h3>
+      <h3>The Vivaan Hotel &amp; Resorts</h3>
       <p style="margin: 10px 0 20px; color: var(--text-muted); font-size: 19px;">
         G.T. Road, Karnal, Haryana
       </p>
@@ -956,16 +934,14 @@ footer {
   <!-- CLOSING -->
   <section class="closing">
     <div class="eyebrow" style="color: var(--rose-gold);">With warm regards</div>
-    <h2>We Can't Wait to Celebrate With You</h2>
-    <p style="font-size: 20px;">Simran &amp; Nitish</p>
+    <p style="font-size: 20px; color: var(--blush-cream); margin-top: 10px;">Sanket Saini &amp; Family</p>
     
     <div class="closing-buttons">
-      <button class="button" onclick="shareInvitation()">↗ SHARE</button>
       <button class="button" onclick="saveDate()">♡ SAVE DATE</button>
     </div>
   </section>
 
-  <footer>MADE WITH LOVE • SIMRAN &amp; NITISH • 2026</footer>
+  <footer>MADE WITH LOVE</footer>
 </main>
 
 <script>
@@ -1001,35 +977,87 @@ function playLoveStorySynth() {
   } catch(e) {}
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sealBtn = document.getElementById('openSealBtn');
+let isOpenTriggered = false;
+
+function openInvitation() {
+  if (isOpenTriggered) return;
+  isOpenTriggered = true;
+
   const envelope = document.getElementById('envelope');
   const invitation = document.getElementById('invitation');
   const music = document.getElementById('weddingMusic');
 
-  sealBtn.addEventListener('click', () => {
-    envelope.classList.add('opening');
-    setTimeout(() => {
-      envelope.style.display = 'none';
-      invitation.classList.add('show');
-      document.getElementById('musicControl').classList.add('show');
-      initScratch();
-      observeEvents();
-      music.play().catch(() => playLoveStorySynth());
-    }, 750);
+  envelope.classList.add('opening');
+  setTimeout(() => {
+    envelope.style.display = 'none';
+    invitation.classList.add('show');
+    initScratch();
+    observeEvents();
+    
+    // Play background audio immediately when envelope opens
+    music.play().catch(() => { 
+      playLoveStorySynth(); 
+    });
+  }, 950);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const triggerBtn = document.getElementById('videoTriggerBtn');
+  const coverVideo = document.getElementById('coverVideo');
+  const tapIndicator = document.querySelector('.tap-indicator');
+  const music = document.getElementById('weddingMusic');
+
+  triggerBtn.addEventListener('click', () => {
+    triggerBtn.style.display = 'none';
+    if (tapIndicator) {
+      tapIndicator.style.display = 'none';
+    }
+
+    if (coverVideo) {
+      coverVideo.muted = false;
+      coverVideo.play().catch(() => {});
+    }
+
+    // Force load and play background audio safely on user tap
+    if (music) {
+      music.load();
+      setTimeout(() => {
+        music.play().catch(err => {
+          console.log("Audio play blocked or failed:", err);
+          // Fallback to synth if mp3 file path fails to load
+          if (typeof playLoveStorySynth === 'function') {
+            playLoveStorySynth();
+          }
+        });
+      }, 100);
+    }
   });
+
+  if (coverVideo) {
+    coverVideo.addEventListener('ended', openInvitation);
+  }
 });
 
 function toggleMusic() {
   const music = document.getElementById('weddingMusic');
   const label = document.getElementById('musicLabel');
+  const icon = document.getElementById('musicIcon');
+  
   if (music.paused) {
-    music.play().then(() => { label.textContent = 'Pause Music'; })
-    .catch(() => { playLoveStorySynth(); label.textContent = 'Pause Music'; });
+    music.play().then(() => { 
+      label.textContent = 'Pause Music'; 
+      icon.textContent = '❚❚'; // Changes to pause icon
+      synthPlaying = false;
+    }).catch(() => { 
+      playLoveStorySynth(); 
+      label.textContent = 'Pause Music'; 
+      icon.textContent = '❚❚';
+    });
   } else {
     music.pause();
     synthPlaying = false;
     label.textContent = 'Play Music';
+    icon.textContent = '♪'; // Changes back to musical note icon
   }
 }
 
@@ -1084,7 +1112,7 @@ function checkScratchProgress() {
     if (data[i] < 35) transparent++;
   }
 
-  if (total && (transparent / total) > 0.60) {
+  if (total && (transparent / total) > 0.40) {
     revealDate();
   }
 }
@@ -1129,9 +1157,14 @@ function observeEvents() {
 }
 
 setInterval(() => {
-  const card = document.querySelector('.haldi');
-  if (!card) return;
+  // Select all event cards instead of just .haldi
+  const cards = document.querySelectorAll('.event-card');
+  if (cards.length === 0) return;
+  
+  // Pick a random event card from the grid
+  const card = cards[Math.floor(Math.random() * cards.length)];
   const rect = card.getBoundingClientRect();
+  
   if (rect.top < window.innerHeight && rect.bottom > 0) {
     const petals = ['🌸', '✿', '❀', '🌼'];
     const flower = document.createElement('span');
@@ -1141,7 +1174,7 @@ setInterval(() => {
     card.appendChild(flower);
     setTimeout(() => flower.remove(), 4800);
   }
-}, 900);
+}, 600); // Decreased interval time slightly so petals appear more frequently across the cards
 
 function updateCountdown() {
   const target = new Date(2026, 11, 11, 10, 0, 0).getTime();
